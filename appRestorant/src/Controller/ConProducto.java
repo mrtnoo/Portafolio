@@ -5,6 +5,7 @@
 package Controller;
 
 import Model.Producto;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -27,27 +28,34 @@ public class ConProducto {
 
 }
         
-        public int IngresarProducto(Producto pro) throws SQLException, Exception {
-           
-        Statement consulta = conectar().createStatement();
-        
-        
-        String query = "insert into producto values ('"+pro.getId()+"','"+pro.getNombre()+"','"+pro.getStock()+"','"
-                +pro.getPesaje() +"','"+pro.getTipoProducto()+"','"+pro.getReceta()+"','"+pro.getActivo()+"')";
-        
-            return consulta.executeUpdate(query);
-
-    }
         
         public int EliminarProducto(String id) throws SQLException, Exception {
            
         Statement consulta = conectar().createStatement();
-        
-        
         String query = "delete from producto where id_producto='"+id+"' ";
         
             return consulta.executeUpdate(query);
 
     }   
-    
+        
+        public int InsertarProducto(Producto pro) throws SQLException, Exception{
+        
+            CallableStatement con = conectar().prepareCall("{call ingresarmesa(?,?)}");
+
+            con.setString(1, pro.getId());
+            con.setString(2, pro.getNombre());
+            con.setString(3, pro.getActivo());
+            con.setString(4, pro.getPesaje());
+            con.setString(5, pro.getTipoProducto());
+            con.setString(6, pro.getTipoAnimal());
+            con.setString(7, pro.getReceta());
+            con.setString(8, pro.getStock());
+            
+
+            return con.executeUpdate();
+        }
 }
+
+    
+
+

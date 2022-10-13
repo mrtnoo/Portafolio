@@ -4,6 +4,7 @@
  */
 package Controller;
 
+import Cone.conexion;
 import Model.Usuario;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -16,19 +17,13 @@ import java.sql.DriverManager;
  */
 public class ConLogin {
     
-       public Connection conectar() throws SQLException {
-        String url = "jdbc:oracle:thin:@//localhost:1521/XE";
-        String user = "apprest";
-        String pass = "123";
-        
-        Connection conn = DriverManager.getConnection(url, user, pass);
-        return conn;
+      
 
-}
+        conexion con = new conexion();
         
         public int Login(String id, String contraseña) throws SQLException, Exception {
            
-        Statement consulta = conectar().createStatement();
+        Statement consulta = con.conectar().createStatement();
         String q = "select * from usuario where id = '"+id+"' and contraseña='"+contraseña+"'";
         return consulta.executeUpdate(q);
         

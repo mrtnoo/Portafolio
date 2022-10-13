@@ -14,6 +14,7 @@ public class Producto {
     String nombre;
     String activo;
     String pesaje;
+    String tipoAnimal;
     String receta;
     String stock;
     String tipoProducto;
@@ -21,11 +22,12 @@ public class Producto {
     public Producto() {
     }
 
-    public Producto(String id, String nombre, String activo, String pesaje, String receta, String stock, String tipoProducto) {
+    public Producto(String id, String nombre, String activo, String pesaje, String tipoAnimal, String receta, String stock, String tipoProducto) {
         this.id = id;
         this.nombre = nombre;
         this.activo = activo;
         this.pesaje = pesaje;
+        this.tipoAnimal = tipoAnimal;
         this.receta = receta;
         this.stock = stock;
         this.tipoProducto = tipoProducto;
@@ -63,6 +65,14 @@ public class Producto {
         this.pesaje = pesaje;
     }
 
+    public String getTipoAnimal() {
+        return tipoAnimal;
+    }
+
+    public void setTipoAnimal(String tipoAnimal) {
+        this.tipoAnimal = tipoAnimal;
+    }
+
     public String getReceta() {
         return receta;
     }
@@ -86,7 +96,7 @@ public class Producto {
     public void setTipoProducto(String tipoProducto) {
         this.tipoProducto = tipoProducto;
     }
-    
-    
+
+
     
 }
