@@ -13,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,7 +30,7 @@ public class MesaView extends javax.swing.JFrame {
 
 public Connection conectar() throws SQLException {
         String url = "jdbc:oracle:thin:@//localhost:1521/XE";
-        String user = "prueba";
+        String user = "newddbb";
         String pass = "123";
         
         Connection conn = DriverManager.getConnection(url, user, pass);
@@ -41,55 +42,17 @@ public Connection conectar() throws SQLException {
             
         initComponents();
         {
+           int a = cbotipo.getSelectedIndex();
+           
+            CargarTabla();
             
-
-            try {
-
-                Connection con = conectar();
-                DefaultTableModel modelo = new DefaultTableModel();
-                jTable1.setModel(modelo);
-                
-                
-                
-                PreparedStatement ps = null;
-                ResultSet rs = null;
-                
-                String sql = "select m.ID_MESA, m.CANTIDAD_MAX_CLIENTES, m.ACTIVO, t.UBICACION FROM mesa m " +
-                             "join tipo_mesa t on m.TIPO_MESA_ID_TIPO_MESA = t.id_tipo_mesa ";
-                ps = con.prepareStatement(sql);
-                rs = ps.executeQuery();
-                
-                ResultSetMetaData rsMd = rs.getMetaData();
-                int cantidadColumnas = rsMd.getColumnCount();
-                
-                
-                modelo.addColumn("Mesa");
-                modelo.addColumn("Capacidad");
-                modelo.addColumn("Estado");
-                modelo.addColumn("Tipo mesa");
-                
-
-                while(rs.next()){
-                    
-                    
-                    Object[] filas = new Object[cantidadColumnas];
-                    
-                    for(int i = 0; i< cantidadColumnas ; i++)
-                    {
-                        
-                        filas[i] = rs.getObject(i+1);
-                        
-                    }
-                    
-                    modelo.addRow(filas);
-                    
-                }
-                
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, e);
-            }
+            cbotipo.addItem("Seleccione Ubicacion");
+            cbotipo.addItem("terraza");
+            cbotipo.addItem("comedor");
             
-            this.setLocationRelativeTo(null);
+            cboEstado.addItem("Seleccione Estado");
+            cboEstado.addItem("disponible");
+            cboEstado.addItem("ocupado");
     
     }   
         
@@ -114,16 +77,25 @@ public Connection conectar() throws SQLException {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        txtCantidad = new javax.swing.JTextField();
-        txtestado = new javax.swing.JTextField();
-        txtTipo = new javax.swing.JTextField();
+        txtMesas = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         cbotipo = new javax.swing.JComboBox<>();
+        cboEstado = new javax.swing.JComboBox<>();
+        txtRut = new javax.swing.JTextField();
+        txtHora = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel1.add(txtid, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 110, 170, -1));
 
         jButton1.setText("Guardar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -131,8 +103,15 @@ public Connection conectar() throws SQLException {
                 jButton1ActionPerformed(evt);
             }
         });
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(108, 151, 134, -1));
 
         jButton2.setText("Eliminar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 151, 134, -1));
 
         jButton3.setText("Actualizar");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -140,6 +119,8 @@ public Connection conectar() throws SQLException {
                 jButton3ActionPerformed(evt);
             }
         });
+        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(433, 151, 134, -1));
+        jPanel1.add(txtMesas, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 50, 170, -1));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -163,108 +144,192 @@ public Connection conectar() throws SQLException {
         });
         jScrollPane1.setViewportView(jTable1);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(147, 147, 147)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(88, 88, 88)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(68, 68, 68)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(108, 108, 108)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 692, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(189, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(235, 235, 235)
-                .addComponent(txtid, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(47, 47, 47)
-                .addComponent(txtestado, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(cbotipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(76, 76, 76)
-                .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
-                .addComponent(txtTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(76, 76, 76)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtestado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbotipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(44, 44, 44)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(101, Short.MAX_VALUE))
-        );
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(108, 191, 692, 260));
+
+        cbotipo.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbotipoItemStateChanged(evt);
+            }
+        });
+        jPanel1.add(cbotipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 110, 180, -1));
+
+        cboEstado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboEstadoActionPerformed(evt);
+            }
+        });
+        jPanel1.add(cboEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 50, 180, -1));
+        jPanel1.add(txtRut, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 50, 168, -1));
+        jPanel1.add(txtHora, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 110, 168, -1));
+
+        jLabel1.setText("N° Asientos");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 30, -1, -1));
+
+        jLabel2.setText("ID Mesa");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 90, -1, -1));
+
+        jLabel3.setText("Estado");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 30, -1, -1));
+
+        jLabel4.setText("Area");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 90, 40, -1));
+
+        jLabel5.setText("Rut Rrserva");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 30, -1, -1));
+
+        jLabel6.setText("Fecha hora");
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 90, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 970, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 504, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
-        Mesa m = new Mesa();
-                
-        ConMesa con = new ConMesa();
-        
-        m.setId_mesa(txtid.getText());
-        m.setEstado(txtestado.getText());
-        m.setMax_clientes(txtCantidad.getText());
-        m.setTipo_mesa(txtTipo.getText());
-        
-        
-           
+    private void cboEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboEstadoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboEstadoActionPerformed
 
-        try{
+    private void cbotipoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbotipoItemStateChanged
 
-            if(con.Ingresar(m)>0){
+    }//GEN-LAST:event_cbotipoItemStateChanged
 
-                JOptionPane.showMessageDialog(null, "Producto registrado");
-            }else{
-                JOptionPane.showMessageDialog(this,"Error");
-            }
-        }catch(Exception ex){
-            JOptionPane.showMessageDialog(null, ex);
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
-        
-    
     private void jTable1AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jTable1AncestorAdded
         // TODO add your handling code here:
     }//GEN-LAST:event_jTable1AncestorAdded
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-     
+        Eliminar_mesa();
+        Agregar_mesa();
+        CargarTabla();
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    public void CArgarCombo(JComboBox c){
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+
+        Eliminar_mesa();
+
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+
+        Agregar_mesa();
+
+    }//GEN-LAST:event_jButton1ActionPerformed
         
+    
+    
+    
+  
+    
+    
+    public void Eliminar_mesa(){
+        
+        ConMesa con = new ConMesa();
+        
+    try {
+        con.Eliminar_mesa(txtid.getText());
+        
+
+        CargarTabla();
+    } catch (Exception ex) {
+        Logger.getLogger(MesaView.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    }
+    
+    public void Agregar_mesa()
+    {
+        Mesa m = new Mesa();
+        ConMesa con = new ConMesa();
+ 
+        
+    
+        int cbtipo = cbotipo.getSelectedIndex();         
+        String cbEstado = (String) cboEstado.getSelectedItem();
+        
+        
+        int ID_MESA = (Integer.parseInt(txtid.getText()));
+        String MAX_CLIENTES = (txtMesas.getText());
+        String ACTIVO = (cbEstado);
+        int TIPO_MESA_ID_TIPO = (cbtipo);
+        String RESERVA_HORA = txtHora.getText();
+        String PERSONA_RUT = txtRut.getText();
+      
+
+        try{
+
+            if(con.Ingresar(ID_MESA, MAX_CLIENTES, ACTIVO, TIPO_MESA_ID_TIPO, RESERVA_HORA, PERSONA_RUT)>0){
+
+                JOptionPane.showMessageDialog(null, "Mesa registrada");
+                CargarTabla();
+            }else{
+                JOptionPane.showMessageDialog(this,"Error");
+            }
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null, ex);
+        }        
+    }
+    
+    public void CargarTabla(){
+            try {
+
+                Connection con = conectar();
+                DefaultTableModel modelo = new DefaultTableModel();
+                jTable1.setModel(modelo);
+                
+                
+                
+                PreparedStatement ps = null;
+                ResultSet rs = null;
+                
+                String sql = "select m.ID_MESA, m.MAX_CLIENTES, m.ACTIVO, t.UBICACION, m.RESERVA_HORA, m.PERSONA_RUT FROM mesa m " +
+                             "join tipo_mesa t on m.TIPO_MESA_ID_TIPO = t.id_tipo order by id_mesa";
+                ps = con.prepareStatement(sql);
+                rs = ps.executeQuery();
+                
+                ResultSetMetaData rsMd = rs.getMetaData();
+                int cantidadColumnas = rsMd.getColumnCount();
+                
+                
+                modelo.addColumn("Mesa");
+                modelo.addColumn("Capacidad");
+                modelo.addColumn("Estado");
+                modelo.addColumn("Tipo mesa");
+                modelo.addColumn("Hora reserva");
+                modelo.addColumn("Rut reserva");
+                
+
+                while(rs.next()){
+                    
+                    
+                    Object[] filas = new Object[cantidadColumnas];
+                    
+                    for(int i = 0; i< cantidadColumnas ; i++)
+                    {
+                        
+                        filas[i] = rs.getObject(i+1);
+                        
+                    }
+                    
+                    modelo.addRow(filas);
+                    
+                }
+                
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+            
+            this.setLocationRelativeTo(null);    
    
     }
     
@@ -305,16 +370,23 @@ public Connection conectar() throws SQLException {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> cboEstado;
     private javax.swing.JComboBox<String> cbotipo;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField txtCantidad;
-    private javax.swing.JTextField txtTipo;
-    private javax.swing.JTextField txtestado;
+    private javax.swing.JTextField txtHora;
+    private javax.swing.JTextField txtMesas;
+    private javax.swing.JTextField txtRut;
     private javax.swing.JTextField txtid;
     // End of variables declaration//GEN-END:variables
 }

@@ -15,6 +15,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import javax.swing.JComboBox;
 import javax.swing.table.DefaultTableModel;
+import oracle.security.o3logon.a;
 
 /**
  *
@@ -24,60 +25,51 @@ public class ConMesa {
     
        public Connection conectar() throws SQLException {
         String url = "jdbc:oracle:thin:@//localhost:1521/XE";
-        String user = "prueba";
+        String user = "newddbb";
         String pass = "123";
         
         Connection conn = DriverManager.getConnection(url, user, pass);
         return conn;
 
 }
-        
- 
-        
-        public int EliminarProducto(String id) throws SQLException, Exception {
+       
+        public int Eliminar_mesa(String id) throws SQLException, Exception {
            
         Statement consulta = conectar().createStatement();
-        String query = "delete from producto where id_producto='"+id+"' ";
-        
-            return consulta.executeUpdate(query);
-
-    
+        String sql = "delete from mesa where id_mesa = '"+id+"'";
+        consulta.execute(sql);
+        return 1; 
         }
+       
+       
+        public ResultSet id() throws SQLException, Exception {
+           
+        Statement consulta = conectar().createStatement();
+        String sql = "select max(id_mesa) from mesa";
+        ResultSet a = consulta.executeQuery(sql);
+        
+  
+       
+        return a; }
         
         
-        public int Ingresar(Mesa m) throws SQLException, Exception {
+        public int Ingresar(int ID_MESA,String MAX_CLIENTES,String ACTIVO , int TIPO_MESA_ID_TIPO,String RESERVA_HORA,String PERSONA_RUT) throws SQLException, Exception {
            
         
-            CallableStatement con = conectar().prepareCall("{call INSERTARMESA(?,?,?,?)}");
+            CallableStatement con = conectar().prepareCall("{call INSERTARMESA(?,?,?,?,?,?)}");
 
-            con.setString(1, m.getId_mesa());
-            con.setString(2, m.getEstado());
-            con.setString(3, m.getTipo_mesa());
-            con.setString(4, m.getMax_clientes());
+            con.setInt(1, ID_MESA);
+            con.setString(2, MAX_CLIENTES);
+            con.setString(3,ACTIVO);
+            con.setInt(4,TIPO_MESA_ID_TIPO);
+            con.setString(5,RESERVA_HORA);
+            con.setString(6,PERSONA_RUT);
+            
             con.execute();
             return 1;
     }   
         
-        public void consultar_tipo(JComboBox cbotipo) throws SQLException{
-        
-            Connection con = conectar() ;
-            
-            PreparedStatement ps = null;
-            ResultSet rs = null;
-            
-            String sql = "select ubicaccion from tipo_mesa";
-            ps = con.prepareStatement(sql);
-            rs = ps.executeQuery();
-            
-            
-            cbotipo.addItem("Seleccione una opcion");
-        
-            while(rs.next()){
-                
-                cbotipo.addItem(rs.getString("ubicaccion"));
-                
-            }
-        }
+    
         
         
 }

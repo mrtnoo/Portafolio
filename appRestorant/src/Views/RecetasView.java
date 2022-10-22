@@ -6,6 +6,7 @@ package Views;
 
 import Controller.ConMesa;
 import Controller.ConPersona;
+import Controller.ConReceta;
 import Model.Empleado;
 import Model.Mesa;
 import Model.Persona;
@@ -25,11 +26,11 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Alumno
  */
-public class EmpleadoView extends javax.swing.JFrame {
+public class RecetasView extends javax.swing.JFrame {
 
         public Connection conectar() throws SQLException {
         String url = "jdbc:oracle:thin:@//localhost:1521/XE";
-        String user = "prueba";
+        String user = "newddbb";
         String pass = "123";
         
         Connection conn = DriverManager.getConnection(url, user, pass);
@@ -38,73 +39,33 @@ public class EmpleadoView extends javax.swing.JFrame {
     /**
      * Creates new form ClienteView
      */
-    public EmpleadoView() {
+    public RecetasView() {
 
         initComponents();
-        try {
-            Cargartabla();
+        
+        
+            try {
+                Cargartabla();
             } catch (SQLException ex) {
-                Logger.getLogger(EmpleadoView.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(RecetasView.class.getName()).log(Level.SEVERE, null, ex);
             }
+            
+        cboTipoReceta.addItem("Seleccione receta");
+        cboTipoReceta.addItem("italiana");
+        cboTipoReceta.addItem("kilo");
+        
+        cboPromo.addItem("seleccione");
+        cboPromo.addItem("2x1");
+        
+        cboTipo.addItem("seleccione");
+        cboTipo.addItem("Tallarines con boloñesa");
+                
+ 
         
         
     }
 
-      public void Cargartabla() throws SQLException {
-       
-        
-        try {
-            
-            Connection conn = conectar();
-            DefaultTableModel modelo = new DefaultTableModel();
-            jTable2.setModel(modelo);
-            
-            PreparedStatement ps = null;
-            ResultSet rs = null;
-            
-            String sql = "select RUT, NOMBRE, APELLIDO, TELEFONO, CORREO, DIRECCION, FECHA_NACIMIENTO from persona p join persona_empleado e on e.persona_id_persona = p.id_persona";
-            ps = conn.prepareStatement(sql);
-            rs = ps.executeQuery();
-            
-            ResultSetMetaData rsMd = rs.getMetaData();
-            int cantidadColumnas = rsMd.getColumnCount();
-            
-            
-           
-            modelo.addColumn("RUT");
-            modelo.addColumn("NOMBRE");
-            modelo.addColumn("APELLIDO");
-            modelo.addColumn("TELEFONO");
-            modelo.addColumn("CORREO");
-            modelo.addColumn("DIRECCION");
-            modelo.addColumn("FECHA_NACIMIENTO");
-
-
-
-            
-            while(rs.next()){
-                
-                
-                Object[] filas = new Object[cantidadColumnas];
-                
-                for(int i = 0; i< cantidadColumnas ; i++)
-                {
-                    
-                    filas[i] = rs.getObject(i+1);
-                    
-                }
-                
-                modelo.addRow(filas);
-                
-            }
-            
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
-        }
-        
-        this.setLocationRelativeTo(null);
-    
-        }
+ 
    
 
        
@@ -113,75 +74,44 @@ public class EmpleadoView extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         txtnombre = new javax.swing.JTextField();
-        txtcorreo = new javax.swing.JTextField();
-        txtapellido = new javax.swing.JTextField();
-        ptxtrut = new javax.swing.JTextField();
-        txtdireccion = new javax.swing.JTextField();
-        txtfecha = new javax.swing.JTextField();
-        eetxtContraseña = new javax.swing.JTextField();
-        txttelefono = new javax.swing.JTextField();
+        txtid = new javax.swing.JTextField();
+        txtprecio = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         txtAux = new javax.swing.JTextField();
-        eetxtTurno = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        eetxtTipo = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
+        cboTipo = new javax.swing.JComboBox<>();
+        jLabel12 = new javax.swing.JLabel();
+        cboTipoReceta = new javax.swing.JComboBox<>();
+        cboPromo = new javax.swing.JComboBox<>();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         jPanel1.add(txtnombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 50, 150, -1));
-        jPanel1.add(txtcorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 120, 150, -1));
-        jPanel1.add(txtapellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 50, 150, -1));
-        jPanel1.add(ptxtrut, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 50, 150, -1));
-        jPanel1.add(txtdireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 120, 150, -1));
-        jPanel1.add(txtfecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 120, 150, -1));
-        jPanel1.add(eetxtContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 120, 150, -1));
-        jPanel1.add(txttelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 50, 150, -1));
+        jPanel1.add(txtid, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 50, 150, -1));
+        jPanel1.add(txtprecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 50, 150, -1));
 
-        jLabel1.setText("Rut");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 28, -1, -1));
+        jLabel1.setText("producto");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 100, -1, -1));
 
         jLabel2.setText("Nombre");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 28, -1, -1));
 
-        jLabel3.setText("Apellido");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 28, -1, -1));
-
-        jLabel4.setText("Telefono");
+        jLabel3.setText("precio");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 30, -1, -1));
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 28, -1, -1));
-
-        jLabel6.setText("Correo");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 98, -1, -1));
-
-        jLabel7.setText("Direccion");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 98, -1, -1));
-
-        jLabel8.setText("Fecha Nacimiento");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 98, -1, -1));
-
-        jLabel9.setText("Contraseña");
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 98, -1, -1));
-
-        jLabel10.setText("Turno");
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 168, -1, -1));
-
-        jLabel11.setText("Tipo Empleado");
-        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 168, -1, -1));
 
         jButton1.setBackground(new java.awt.Color(59, 110, 52));
         jButton1.setText("Agregar");
@@ -212,11 +142,9 @@ public class EmpleadoView extends javax.swing.JFrame {
         txtAux.setForeground(new java.awt.Color(153, 153, 153));
         txtAux.setText("Ingrese rut...");
         jPanel1.add(txtAux, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 260, 230, -1));
-        jPanel1.add(eetxtTurno, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 190, 150, -1));
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sources/kisspng-ingredient-kitchen-utensil-food-condiment-ingredients-and-kitchen-utensils-5a70503c83a3c0.7918750215173100125392.png"))); // NOI18N
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, -10, 480, 500));
-        jPanel1.add(eetxtTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 190, 150, -1));
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -233,11 +161,42 @@ public class EmpleadoView extends javax.swing.JFrame {
 
         jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 320, 710, 160));
 
+        jPanel1.add(cboTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 120, 140, -1));
+
+        jLabel12.setText("Tipo Plato");
+        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 100, 60, -1));
+
+        cboTipoReceta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboTipoRecetaActionPerformed(evt);
+            }
+        });
+        jPanel1.add(cboTipoReceta, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 120, 150, -1));
+
+        jPanel1.add(cboPromo, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 120, 150, -1));
+
+        jLabel13.setText("id receta");
+        jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 28, -1, -1));
+
+        jLabel14.setText("Tipo Receta");
+        jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 100, 110, -1));
+
+        jButton4.setText("jButton4");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 190, -1, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1054, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(42, 42, 42))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -250,42 +209,9 @@ public class EmpleadoView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
-        ConPersona con = new ConPersona();
-        
-        
-        Persona per = new Persona();
-        
-        
-        per.setApellido(txtapellido.getText());
-        per.setNombre(txtnombre.getText());
-        per.setTelefono(txttelefono.getText());
-        per.setCorreo(txtcorreo.getText());
-        per.setDireccion(txtdireccion.getText());
+
+AgregarReceta();
     
-        
-       
-        
-        Empleado emp = new Empleado();
-        emp.setID_PERSONA_EMPLEADO(ptxtrut.getText());
-        emp.setCONTRASEÑA(eetxtContraseña.getText());
-        emp.setTURNO_EMPLEADO_ID_TURNO(eetxtTurno.getText());
-        emp.setTIPO_EMPLEADO_ID_TIPO_EMPLEADO(eetxtTipo.getText());
-        emp.setPERSONA_ID_PERSONA(ptxtrut.getText());
-        
-        
-        try {
-            if(con.InsertarPersona(per)>0){
-                if(con.InsertarEmpleado(emp)>0)
-                    
-                    JOptionPane.showMessageDialog(null, "Empleado Registrado");
-                    Cargartabla();
-            }
-            
-        } catch (Exception ex) {
-            Logger.getLogger(EmpleadoView.class.getName()).log(Level.SEVERE, null, ex);
-        }
-     
 
         
         
@@ -297,12 +223,12 @@ public class EmpleadoView extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        ConPersona per = new ConPersona();
+        ConReceta con = new ConReceta();
         
         try {
-            if(per.EliminarEmpleado(ptxtrut.getText())>0){
+            if(con.Eliminar_plato(Integer.parseInt(txtid.getText()))>0){
             
-                JOptionPane.showMessageDialog(null, "Empeleado Eliminado");
+                JOptionPane.showMessageDialog(null, "Plato Eliminado");
                 Cargartabla();
         }
         } catch (Exception ex) {
@@ -311,7 +237,128 @@ public class EmpleadoView extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void cboTipoRecetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboTipoRecetaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboTipoRecetaActionPerformed
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+            try {
+                Cargartabla();
+            } catch (SQLException ex) {
+                Logger.getLogger(RecetasView.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+
+    
+    public void AgregarReceta(){
+
+        ConReceta con = new ConReceta();
+        
+        int ID_PLATO   = (Integer.parseInt(txtid.getText()));
+        String NOMBRE      = txtnombre.getText();
+        int PRECIO = (Integer.parseInt(txtprecio.getText()));
+        
+        
+        int TIPO_PLATO_ID_TIPO = cboTipoReceta.getSelectedIndex();
+        int PROMOCION_ID_PROMO = cboPromo.getSelectedIndex();
+        int TIPO_RECETA_ID = cboTipo.getSelectedIndex();
+        
+        
+        
+        try{
+
+            if(con.InsertarReceta(ID_PLATO, NOMBRE, PRECIO, 
+               TIPO_PLATO_ID_TIPO, PROMOCION_ID_PROMO, TIPO_RECETA_ID)>0){
+                
+
+                JOptionPane.showMessageDialog(null, "Plato Registrado");
+                Cargartabla();
+            }else{
+                JOptionPane.showMessageDialog(this,"Error");
+            }
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null, ex);
+        }        
+        
+    }
+    
+    
+    
+    
+    
+    
+         public void Cargartabla() throws SQLException {
+       
+        
+        try {
+            
+            Connection con = conectar();
+            DefaultTableModel modelo = new DefaultTableModel();
+            jTable2.setModel(modelo);
+            
+            PreparedStatement ps = null;
+            ResultSet rs = null;
+            
+            String sql = "select ID_PLATO, NOMBRE, PRECIO, t.descripcion , pro.descripcion , tr.descripcion from plato p " +
+"join tipo_plato t " +
+"on p.tipo_plato_id_tipo = t.id_tipo " +
+"join promocion pro " +
+"on pro.id_promo = p.promocion_id_promo " +
+"join tipo_receta tr " +
+"on tr.id = p.tipo_receta_id";
+            
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            
+            ResultSetMetaData rsMd = rs.getMetaData();
+            int cantidadColumnas = rsMd.getColumnCount();
+            
+            
+           
+            modelo.addColumn("ID");
+            modelo.addColumn("NOMBRE");
+            modelo.addColumn("PRECIO");
+            modelo.addColumn("TIPO RECETA");
+            modelo.addColumn("PROMOCION");
+            modelo.addColumn("DESCRIPCION");
+            
+       
+
+            
+            while(rs.next()){
+                
+                
+                Object[] filas = new Object[cantidadColumnas];
+                
+                for(int i = 0; i< cantidadColumnas ; i++)
+                {
+                    
+                    filas[i] = rs.getObject(i+1);
+                    
+                }
+                
+                modelo.addRow(filas);
+                
+            }
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+        this.setLocationRelativeTo(null);
+    
+        }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     /**
      * @param args the command line arguments
@@ -344,39 +391,33 @@ public class EmpleadoView extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new EmpleadoView().setVisible(true);
+                new RecetasView().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField eetxtContraseña;
-    private javax.swing.JTextField eetxtTipo;
-    private javax.swing.JTextField eetxtTurno;
+    private javax.swing.JComboBox<String> cboPromo;
+    private javax.swing.JComboBox<String> cboTipo;
+    private javax.swing.JComboBox<String> cboTipoReceta;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable2;
-    private javax.swing.JTextField ptxtrut;
     private javax.swing.JTextField txtAux;
-    private javax.swing.JTextField txtapellido;
-    private javax.swing.JTextField txtcorreo;
-    private javax.swing.JTextField txtdireccion;
-    private javax.swing.JTextField txtfecha;
+    private javax.swing.JTextField txtid;
     private javax.swing.JTextField txtnombre;
-    private javax.swing.JTextField txttelefono;
+    private javax.swing.JTextField txtprecio;
     // End of variables declaration//GEN-END:variables
 }

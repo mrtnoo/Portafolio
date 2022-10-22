@@ -3,6 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/Alumno/Documents/GitHub/Portafolio/appRestorant/src/Controller/ConCliente.java</file>
             <file>file:/C:/Users/Alumno/Documents/GitHub/Portafolio/appRestorant/src/Controller/ConMesa.java</file>
             <file>file:/C:/Users/Alumno/Documents/GitHub/Portafolio/appRestorant/src/Views/OrdenCompraViews.java</file>
             <file>file:/C:/Users/Alumno/Documents/GitHub/Portafolio/appRestorant/src/Views/MesaView.java</file>
@@ -18,6 +19,7 @@
             <file>file:/C:/Users/Alumno/Documents/GitHub/Portafolio/appRestorant/src/Views/newLogin.java</file>
             <file>file:/C:/Users/Alumno/Documents/GitHub/Portafolio/appRestorant/src/Views/ClienteView.java</file>
             <file>file:/C:/Users/Alumno/Documents/GitHub/Portafolio/appRestorant/src/Views/FinanzasView.java</file>
+            <file>file:/C:/Users/Alumno/Documents/GitHub/Portafolio/appRestorant/src/Controller/ConPedido.java</file>
         </group>
     </open-files>
 </project-private>

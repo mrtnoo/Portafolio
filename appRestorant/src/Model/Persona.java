@@ -9,37 +9,31 @@ package Model;
  * @author Alumno
  */
 public class Persona {
-    
-    String id_persona;
+
+ 
     String rut;
     String nombre;
     String apellido;
     String telefono;
     String correo;
     String direccion;
-    String fecha_nacimiento;
+    
 
     public Persona() {
     }
 
-    public Persona(String id_persona, String rut, String nombre, String apellido, String telefono, String correo, String direccion, String fecha_nacimiento) {
-        this.id_persona = id_persona;
+    public Persona(String rut, String nombre, String apellido, String telefono, String correo, String direccion) {
+        
         this.rut = rut;
         this.nombre = nombre;
         this.apellido = apellido;
         this.telefono = telefono;
         this.correo = correo;
         this.direccion = direccion;
-        this.fecha_nacimiento = fecha_nacimiento;
+    
     }
 
-    public String getId_persona() {
-        return id_persona;
-    }
 
-    public void setId_persona(String id_persona) {
-        this.id_persona = id_persona;
-    }
 
     public String getRut() {
         return rut;
@@ -88,14 +82,5 @@ public class Persona {
     public void setDireccion(String direccion) {
         this.direccion = direccion;
     }
-
-    public String getFecha_nacimiento() {
-        return fecha_nacimiento;
-    }
-
-    public void setFecha_nacimiento(String fecha_nacimiento) {
-        this.fecha_nacimiento = fecha_nacimiento;
-    }
-
 
 }

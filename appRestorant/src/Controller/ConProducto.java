@@ -51,8 +51,9 @@ public class ConProducto {
             con.setString(7, pro.getReceta());
             con.setString(8, pro.getStock());
             
-
-            return con.executeUpdate();
+            con.execute();
+            
+            return 1;
         }
 }
 
